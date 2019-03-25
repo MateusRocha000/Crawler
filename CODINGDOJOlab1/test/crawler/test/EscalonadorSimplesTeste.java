@@ -18,7 +18,7 @@ public class EscalonadorSimplesTeste {
 	
 	@Test
 	public synchronized void testServidor() {
-		Servidor s= new Servidor("xpto.com");
+		Servidor s = new Servidor("xpto.com");
 		assertTrue("Ao iniciar um servidor, ele deve estar acessível",s.isAccessible());
 		s.acessadoAgora();
 		assertTrue("Como ele acabou de ser acessado, ele não pode estar acessivel",!s.isAccessible());

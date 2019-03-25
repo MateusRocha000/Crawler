@@ -28,6 +28,8 @@ public class EscalonadorSimples implements Escalonador{
 	private HashSet<String> hash ; 
         int maxDepth ;
         private HashMap<String, Servidor> servidores;
+        private HashMap<String, Record> record;
+        private Integer countPages, maxPages = 5;
         
         public EscalonadorSimples() {
             allPages = new LinkedHashMap();
@@ -47,14 +49,21 @@ public class EscalonadorSimples implements Escalonador{
                 
                 ArrayList<URLAddress> url = (ArrayList<URLAddress>)entry.getValue();
                 url_address = url.get(0);
-                Servidor servidor = servidores.get(url.get(0).getDomain());
+                Servidor servidor = servidores.get(url_address.getDomain());
                 servidor.acessadoAgora();
-   
+                return url_address;
             } else {
-                return null;
+                try{
+                    Thread.sleep(1000);
+                    
+                }
+                catch(InterruptedException e){
+                    System.err.println(e);
+                }
+                
             }
             
-          return url_address;
+            return null;
 	}
 
 	@Override
@@ -78,25 +87,33 @@ public class EscalonadorSimples implements Escalonador{
 
 	@Override
 	public Record getRecordAllowRobots(URLAddress url) {
-		// TODO Auto-generated method stub
-		return null;
+            try {
+             RobotExclusion robot = new RobotExclusion();    
+                 Record rec = robot.get(new URL(url.getAddress()), "daniBot");
+
+                 if(servidores.containsKey(url.getDomain())){
+                     return rec;    
+                 } else {
+                     return null;
+                 }             
+            }catch(Exception e){
+                return null;
+            }          
 	}
 
 	@Override
 	public void putRecorded(String domain, Record domainRec) {
-		// TODO Auto-generated method stub
+		record.put(domain, domainRec);
 		
 	}
 	@Override
 	public boolean finalizouColeta() {
-		// TODO Auto-generated method stub
-		return false;
+            return countPages == maxPages ? true : false;
 	}
 
 	@Override
 	public void countFetchedPage() {
-		// TODO Auto-generated method stub
-		
+		countPages++;
 	}
 
 	
