@@ -23,10 +23,11 @@ public class EscalonadorSimplesTeste {
 		s.acessadoAgora();
 		assertTrue("Como ele acabou de ser acessado, ele não pode estar acessivel",!s.isAccessible());
 		try {
-			System.out.println("Aguardando "+(Servidor.ACESSO_MILIS+1000)+" milisegundos...");
-			this.wait(Servidor.ACESSO_MILIS+1000L);
+			System.out.println("Aguardando 2000 milisegundos...");
+			this.wait(2000L);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+                        System.out.println("Teste servidor");
 			e.printStackTrace();
 		}
 		assertTrue("Após a espera de Servidor.ACESSO_MILIS milissegundos, o servidor deve voltar a ficar acessível",s.isAccessible());
@@ -36,11 +37,11 @@ public class EscalonadorSimplesTeste {
 	public synchronized void testAdicionaRemovePagina() throws MalformedURLException {
 		
 		URLAddress urlProf = new URLAddress("http://www.xpto.com.br/index.html",Integer.MAX_VALUE);
-		URLAddress urlTerra = new URLAddress("http://www.terra.com.br/index.html",1);
-		URLAddress urlTerraRep = new URLAddress("http://www.terra.com.br/index.html",1);
-		URLAddress urlUOL1 = new URLAddress("http://www.uol.com.br/",1);
-		URLAddress urlUOL2 = new URLAddress("http://www.uol.com.br/profMax.html",1);
-		URLAddress urlGlobo = new URLAddress("http://www.globo.com.br/profMax.html",1);
+		URLAddress urlTerra = new URLAddress("http://www.terra.com.br/index.html",Integer.MAX_VALUE);
+		URLAddress urlTerraRep = new URLAddress("http://www.terra.com.br/index.html",Integer.MAX_VALUE);
+		URLAddress urlUOL1 = new URLAddress("http://www.uol.com.br/",Integer.MAX_VALUE);
+		URLAddress urlUOL2 = new URLAddress("http://www.uol.com.br/profMax.html",Integer.MAX_VALUE);
+		URLAddress urlGlobo = new URLAddress("http://www.globo.com.br/profMax.html",Integer.MAX_VALUE);
 		long timeFirstHitUOL,timeSecondHitUOL; 
 		URLAddress u1,u2,u3;
 		
@@ -59,9 +60,10 @@ public class EscalonadorSimplesTeste {
 		u3 = e.getURL();
 		URLAddress[] ordemEsperada = {urlTerra,urlUOL1,urlGlobo};
 		URLAddress[] ordemFeita = {urlTerra,urlUOL1,urlGlobo};
-		
+		System.out.println("AQui 22"); 
 		//o primeiro nao pode ser urlProf (profundidade infinita)
 		assertNotSame("A URL '"+urlProf+"' deveria ser desconsiderada pois possui profundidade muito alta",urlProf,u1);
+		System.out.println("AQui 33"); 
 		
 		
 		//verifica se está na ordem correta (os tres primeiros)

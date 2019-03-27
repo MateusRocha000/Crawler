@@ -33,7 +33,6 @@ public class URLAddress {
 	}
 	public String getDomain()
 	{
-	
 		return address.getHost();
 	}
 	public String getAddress() {
